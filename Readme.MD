@@ -1,5 +1,5 @@
 ###Garm
-Garm is a versatile tool designed to generate Windows and Linux reverse shell payloads. It simplifies the process of creating reverse shells by providing a user-friendly interface and customizable options. This tool is intended for educational and ethical use only.
+#is a versatile tool designed to generate Windows and Linux reverse shell payloads. It simplifies the process of creating reverse shells by providing a user-friendly interface and customizable options. This tool is intended for educational and ethical use only.
 
 ##Features
 Generates reverse shell payloads for Windows and Linux environments
