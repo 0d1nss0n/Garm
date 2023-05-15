@@ -17,6 +17,7 @@ Spawns a listener on the port chosen when creating payload
 
 Note: Ensure that you have the necessary permissions and legal authorization before using this tool on any system.
 
+## Other
 Contributing
 Contributions to Garm are welcome! If you have any ideas, bug fixes, or new features to propose, please submit an issue or a pull request. Make sure to follow the existing coding style and provide clear documentation for your contributions.
 
