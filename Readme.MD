@@ -12,10 +12,10 @@ Customizable options for payload configuration
 Spawns a listener on the port chosen when creating payload
 
 ## How to use:
-1. Choose the target operating system (Windows or Linux).
-2. Specify the desired options such as IP address, port, payload type, etc.
-3. Once all options are set, Garm will generate the reverse shell payload.
-4. Copy the generated payload and use it as needed in your target environment.
+python3 garm.py
+
+if you opt to having the payload save as a file then it will be in the output directory
+otherwise it will display the payload in the console
 
 Note: Ensure that you have the necessary permissions and legal authorization before using this tool on any system.
 
