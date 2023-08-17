@@ -16,70 +16,90 @@ from payload_types.linux_php import generate_php
 if not os.path.exists('output'):
     os.makedirs('output')
 
-print('---------------------------------------------------------------------------')
 print('''
-           @@@@@@@@   @@@@@@   @@@@@@@   @@@@@@@@@@   
-          @@@@@@@@@  @@@@@@@@  @@@@@@@@  @@@@@@@@@@@  
-          !@@        @@!  @@@  @@!  @@@  @@! @@! @@!  
-          !@!        !@!  @!@  !@!  @!@  !@! !@! !@!  
-          !@! @!@!@  @!@!@!@!  @!@!!@!   @!! !!@ @!@  
-          !!! !!@!!  !!!@!!!!  !!@!@!    !@!   ! !@!  
-          :!!   !!:  !!:  !!!  !!: :!!   !!:     !!:  
-          :!:   !::  :!:  !:!  :!:  !:!  :!:     :!:  
-           ::: ::::  ::   :::  ::   :::  :::     ::   
-           :: :: :    :   : :   :   : :   :      :     ''')
-print('')
-print('')
-print('Payload Creator and Listener Spawner')
-print('')
-print('Created by 0D1nss0n')
-print('')
-print('This is for Educational Purposes Only')
-print('I am not responsible for any malicious use of this tool')
-print('')
-print('---------------------------------------------------------------------------')
-print('')
+            ░▓▒░        ░▓█▓░
+            ░▒██▒░      ░████▒░
+             ░▓███▓░    ░█████▓░
+              ░█████▓▒░ ░███████▒░
+               ░███████▒░█████████▒░
+               ░▒██████████████████▓░
+              ░▒██████████████████████▓▒░
+            ░▒██████████████████████████████▓▒░
+           ░▓█████████████████████████████████████▓▒░
+          ░████████████████████████████████████████████▓▒░
+         ░▒███████████████████████████████████████████████▒░
+         ░▒████████████████████████████████████████████████▓
+       ░▒▓██████████████████████████████████████████████████
+    ░▒▓█████████████████████████████████████████████████████
+ ░▒▓████████████████████████████████████████████████████████
+▓██████████████████████████████████████████████████████████▒
+▒██████████████████████████████████████████████████████████░
+░▒████████████████████████████████████████████████████████░
+ ░▒██████████████████████████████████████████████████████░
+   ░▒▓▓▓████████▓▒▒▒▓███████████████████████████████████░
+                      ░▒▓█████████████████████████████▒░
+                           ░▒▓███████████████████████▒░
+                                ░▒▓████████████████▓░
+                                  ░▓████████▓▒▒░
+
+	 ██████   █████  ██████  ███    ███ 
+	██       ██   ██ ██   ██ ████  ████ 
+	██   ███ ███████ ██████  ██ ████ ██ 
+	██    ██ ██   ██ ██   ██ ██  ██  ██ 
+	 ██████  ██   ██ ██   ██ ██      ██ 
+
+      -Payload Creator and Listener Spawner                             
+      -Created by: 0D1NSS0N 
+      -This is for Educational Purposes Only
+      -I am not responsible for any malicious use of this tool                           
+ ''')
 
 def get_local_ip():
-    """
-    Prompts the user to select an IP address from available network interfaces,
-    or allows them to enter a custom IP address.
-    Returns the selected IP address as a string.
-    """
     interfaces = netifaces.interfaces()
     print('Available network interfaces:')
+    available_interfaces = []
     for i, interface in enumerate(interfaces):
         addresses = netifaces.ifaddresses(interface)
         if netifaces.AF_INET in addresses:
             ip_address = addresses[netifaces.AF_INET][0]['addr']
-            print(f'{i+1}: {interface} ({ip_address})')
-        else:
-            print(f'{i+1}: {interface} (no IP address)')
-            
+            if ip_address != '127.0.0.1':  # Exclude local loopback IP
+                available_interfaces.append((i, interface, ip_address))
+    
+    for i, (num, interface, ip_address) in enumerate(available_interfaces):
+        print(f'{i+1}: {interface} ({ip_address})')
+    
+    print(f'{len(available_interfaces) + 1}: Enter a custom IP address')
+    print(f'{len(available_interfaces) + 2}: Exit')
+    
     print('')
     print('---------------------------------------------------------------------------')
     print('')
-    choice = input('Select a network interface (1-' + str(len(interfaces)) + '), or enter a custom IP address: ')
+    choice = input(f'Select a network interface (1-{len(available_interfaces) + 2}): ')
     print('')
     print('---------------------------------------------------------------------------')
     print('')
     
     try:
         choice_num = int(choice)
-        if choice_num < 1 or choice_num > len(interfaces):
+        if choice_num == len(available_interfaces) + 2:
+            exit()
+        elif choice_num < 1 or choice_num > len(available_interfaces) + 1:
             raise ValueError
+        elif choice_num == len(available_interfaces) + 1:
+            ip_address = input('Enter a custom IP address: ')
+            print(f'Using custom IP address {ip_address}')
+            print('')
+            print('---------------------------------------------------------------------------')
+            print('')
         else:
-            ip_address = netifaces.ifaddresses(interfaces[choice_num-1])[netifaces.AF_INET][0]['addr']
-            print(f'Using IP address {ip_address} from {interfaces[choice_num-1]}')
+            ip_address = available_interfaces[choice_num-1][2]
+            print(f'Using IP address {ip_address} from {available_interfaces[choice_num-1][1]}')
             print('')
             print('---------------------------------------------------------------------------')
             print('')
     except ValueError:
-        ip_address = choice
-        print(f'Using custom IP address {ip_address}')
-        print('')
-        print('---------------------------------------------------------------------------')
-        print('')
+        print('Invalid choice. Please enter a valid option.')
+        return get_local_ip()
     
     return ip_address
 
